@@ -15,5 +15,9 @@ namespace IAMS.Model
     /// </summary>
     public abstract class ModelBase
     {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public string ID { get; set; }
     }
 }
