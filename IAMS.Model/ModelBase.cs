@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IAMS.Model
 {
@@ -18,6 +19,9 @@ namespace IAMS.Model
         /// <summary>
         /// ID
         /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "模型ID不允许为空")]
         public string ID { get; set; }
     }
 }
