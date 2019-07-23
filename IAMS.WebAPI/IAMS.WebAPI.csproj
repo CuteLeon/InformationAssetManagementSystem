@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IAMS.Common\IAMS.Common.csproj" />
     <ProjectReference Include="..\IAMS.Data\IAMS.Data.csproj" />
   </ItemGroup>
 

@@ -21,7 +21,7 @@ namespace IAMS.Common
         /// <typeparam name="T"></typeparam>
         /// <param name="json"></param>
         /// <returns></returns>
-        public static object DeserializeObject<T>(string json)
+        public static T DeserializeObject<T>(string json)
             => JsonConvert.DeserializeObject<T>(json);
     }
 }
