@@ -8,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IAMS.WebAPI
 {
+    // TODO: 控制器 Log 日志
+    // TODO: 外部配置监听端口
+    // TODO: 客户端外部配置连接端口
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
