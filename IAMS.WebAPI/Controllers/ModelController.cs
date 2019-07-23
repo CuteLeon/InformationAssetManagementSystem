@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IAMS.WebAPI.Controllers
 {
+    [Route("[controller]/[action]")]
     [ApiController]
     public class ModelController<TModel> : ControllerBase
         where TModel : ModelBase
