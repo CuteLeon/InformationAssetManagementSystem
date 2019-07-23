@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using IAMS.Data;
+using IAMS.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IAMS.WebAPI.Controllers
@@ -7,11 +10,21 @@ namespace IAMS.WebAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly DBContext context;
+
+        public ValuesController(DBContext context)
+        {
+            this.context = context;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            context.Persons.Add(new Person() { Name = "123" });
+            context.SaveChanges();
+
+            return new string[] { "value1", "value2", context.Persons.Count().ToString() };
         }
 
         // GET api/values/5
