@@ -29,7 +29,8 @@ namespace IAMS.Client.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                this.UpdateProgress($"启动程序出错：{ex.Message}");
+                MessageBox.Show(ex.Message, "启动程序出错", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 dialogResult = DialogResult.Abort;
             }
@@ -44,19 +45,27 @@ namespace IAMS.Client.Forms
         /// </summary>
         private async Task LaunchApplication()
         {
-            this.MainForm = new MainForm();
-
+            this.UpdateProgress($"检查 WebAPI 连接 ...");
             var address = ConfigHelper.WebAPIAddress;
             if (string.IsNullOrWhiteSpace(address))
             {
-                throw new ArgumentNullException("Web API 地址为空！");
+                throw new Exception("WebAPI 地址为空！");
             }
 
-            // 测试连接 并 获取会话秘钥
+            this.UpdateProgress($"获取会话秘钥 ...");
             const string apiAddress = "Connect/GetSessionKey";
             string key = await WebHelper.GetStringAsync($"{address}/{apiAddress}");
             WebHelper.SetSessionKey(key);
 
+            this.UpdateProgress($"创建主窗口 ...");
+            this.MainForm = new MainForm();
         }
+
+        /// <summary>
+        /// 更新进度
+        /// </summary>
+        /// <param name="message"></param>
+        private void UpdateProgress(string message)
+            => this.ProgressLabel.Text = message;
     }
 }

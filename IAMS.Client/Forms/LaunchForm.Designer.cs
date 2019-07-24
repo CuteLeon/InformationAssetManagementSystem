@@ -37,10 +37,11 @@
             this.ProgressLabel.BackColor = System.Drawing.Color.Transparent;
             this.ProgressLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.ProgressLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ProgressLabel.ForeColor = System.Drawing.Color.Gray;
             this.ProgressLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ProgressLabel.Location = new System.Drawing.Point(0, 265);
+            this.ProgressLabel.Location = new System.Drawing.Point(0, 303);
             this.ProgressLabel.Name = "ProgressLabel";
-            this.ProgressLabel.Size = new System.Drawing.Size(424, 30);
+            this.ProgressLabel.Size = new System.Drawing.Size(465, 30);
             this.ProgressLabel.TabIndex = 0;
             this.ProgressLabel.Text = "正在启动 ...";
             this.ProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -52,7 +53,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = global::IAMS.Client.AppResource.Launcher;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(424, 295);
+            this.ClientSize = new System.Drawing.Size(465, 333);
             this.Controls.Add(this.ProgressLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LaunchForm";
