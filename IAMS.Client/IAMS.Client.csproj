@@ -55,6 +55,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TabButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TabContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TabContainer.Designer.cs">
+      <DependentUpon>TabContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +83,9 @@
     <EmbeddedResource Include="AppResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TabContainer.resx">
+      <DependentUpon>TabContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -111,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Launcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IAMS.Model\IAMS.Model.csproj">
+      <Project>{5E532960-5676-41F3-B5BF-F9F6D450E9FC}</Project>
+      <Name>IAMS.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
