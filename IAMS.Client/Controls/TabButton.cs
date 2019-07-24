@@ -14,7 +14,7 @@ namespace IAMS.Client.Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="lastActiveTab"></param>
-        public delegate void TabEventHandler(object sender, TabButton lastActiveTab);
+        public delegate void TabEventHandler(TabButton sender, TabButton lastActiveTab);
 
         /// <summary>
         /// 激活选项按钮

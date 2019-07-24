@@ -29,14 +29,14 @@ namespace IAMS.Client.Forms
         {
             this.TabButtonPanel.BackColor = Color.FromArgb(234, 232, 231);
 
-            foreach (var (name, type) in new (string, Type)[]
+            foreach (var (name, type, container) in new (string, Type, Type)[]
             {
-                ("台式电脑", typeof(DesktopComputer)),
-                ("笔记本电脑", typeof(LaptopComputer)),
-                ("备用电脑", typeof(AuxiliaryComputer)),
-                ("机房设备", typeof(RoomEquipment)),
-                ("其他设备", typeof(OtherEquipment)),
-                ("人员信息", typeof(Person)),
+                ("台式电脑", typeof(DesktopComputer), typeof(ModelContainerBase)),
+                ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainerBase)),
+                ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainerBase)),
+                ("机房设备", typeof(RoomEquipment), typeof(ModelContainerBase)),
+                ("其他设备", typeof(OtherEquipment), typeof(ModelContainerBase)),
+                ("人员信息", typeof(Person), typeof(ModelContainerBase)),
             })
             {
                 var tabButton = new TabButton()
@@ -47,8 +47,20 @@ namespace IAMS.Client.Forms
                     Height = 50,
                 };
 
-                tabButton.ActiveTabChanged += (s, l) => { Console.WriteLine($"当前：{(s as Control).Name}，Last：{l?.Name}"); };
-
+                System.Threading.Thread.Sleep(100);
+                var containerInstance = Activator.CreateInstance(container) as ModelContainerBase;
+                var random = new Random();
+                containerInstance.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+                containerInstance.Hide();
+                containerInstance.Left = random.Next(500);
+                containerInstance.Top = random.Next(500);
+                tabButton.Tag = containerInstance;
+                this.ContainerPanel.Controls.Add(containerInstance);
+                tabButton.ActiveTabChanged += (s, l) =>
+                {
+                    (l?.Tag as ModelContainerBase)?.Hide();
+                    (s.Tag as ModelContainerBase).Show();
+                };
                 this.TabButtonPanel.Controls.Add(tabButton);
             }
 

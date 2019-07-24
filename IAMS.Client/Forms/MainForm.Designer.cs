@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.TabButtonPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ContainerPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // TabButtonPanel
@@ -40,11 +41,20 @@
             this.TabButtonPanel.Size = new System.Drawing.Size(200, 450);
             this.TabButtonPanel.TabIndex = 0;
             // 
+            // ContainerPanel
+            // 
+            this.ContainerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ContainerPanel.Location = new System.Drawing.Point(200, 0);
+            this.ContainerPanel.Name = "ContainerPanel";
+            this.ContainerPanel.Size = new System.Drawing.Size(600, 450);
+            this.ContainerPanel.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ContainerPanel);
             this.Controls.Add(this.TabButtonPanel);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -57,6 +67,7 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel TabButtonPanel;
+        private System.Windows.Forms.Panel ContainerPanel;
     }
 }
 
