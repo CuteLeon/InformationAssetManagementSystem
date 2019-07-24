@@ -51,6 +51,8 @@ namespace IAMS.Client.Forms
 
                 this.TabButtonPanel.Controls.Add(tabButton);
             }
+
+            ((this.TabButtonPanel.Controls.Count > 0) ? (this.TabButtonPanel.Controls[0] as TabButton) : null)?.TabActive();
         }
         #endregion
     }
