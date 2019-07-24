@@ -29,7 +29,7 @@ namespace IAMS.Client.Forms
         {
             this.TabButtonPanel.BackColor = Color.FromArgb(234, 232, 231);
 
-            foreach (var (name, type, container) in new (string, Type, Type)[]
+            foreach (var (name, modelType, containerType) in new (string, Type, Type)[]
             {
                 ("台式电脑", typeof(DesktopComputer), typeof(ModelContainerBase)),
                 ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainerBase)),
@@ -39,32 +39,43 @@ namespace IAMS.Client.Forms
                 ("人员信息", typeof(Person), typeof(ModelContainerBase)),
             })
             {
+                var container = Activator.CreateInstance(containerType) as ModelContainerBase;
+
+                #region 初始化
+                System.Threading.Thread.Sleep(100);
+                var random = new Random();
+                container.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
+                #endregion
+
+                container.Dock = DockStyle.Fill;
+                container.Visible = false;
+                this.ContainerPanel.Controls.Add(container);
+
                 var tabButton = new TabButton()
                 {
-                    Name = $"Tab_{type.Name}",
+                    Name = $"Tab_{modelType.Name}",
                     Text = name,
                     Width = this.TabButtonPanel.Width,
                     Height = 50,
+
+                    Tag = container,
                 };
 
-                System.Threading.Thread.Sleep(100);
-                var containerInstance = Activator.CreateInstance(container) as ModelContainerBase;
-                var random = new Random();
-                containerInstance.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-                containerInstance.Hide();
-                containerInstance.Left = random.Next(500);
-                containerInstance.Top = random.Next(500);
-                tabButton.Tag = containerInstance;
-                this.ContainerPanel.Controls.Add(containerInstance);
-                tabButton.ActiveTabChanged += (s, l) =>
-                {
-                    (l?.Tag as ModelContainerBase)?.Hide();
-                    (s.Tag as ModelContainerBase).Show();
-                };
+                tabButton.ActiveTabChanged += this.TabButton_ActiveTabChanged;
+
                 this.TabButtonPanel.Controls.Add(tabButton);
             }
 
             ((this.TabButtonPanel.Controls.Count > 0) ? (this.TabButtonPanel.Controls[0] as TabButton) : null)?.TabActive();
+        }
+        #endregion
+
+        #region 切换容器
+
+        private void TabButton_ActiveTabChanged(TabButton current, TabButton last)
+        {
+            (last?.Tag as ModelContainerBase)?.Hide();
+            (current.Tag as ModelContainerBase).Show();
         }
         #endregion
     }
