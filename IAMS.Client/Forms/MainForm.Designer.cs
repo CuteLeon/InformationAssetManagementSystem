@@ -37,7 +37,7 @@
             this.TabButtonPanel.Location = new System.Drawing.Point(0, 0);
             this.TabButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.TabButtonPanel.Name = "TabButtonPanel";
-            this.TabButtonPanel.Size = new System.Drawing.Size(120, 450);
+            this.TabButtonPanel.Size = new System.Drawing.Size(200, 450);
             this.TabButtonPanel.TabIndex = 0;
             // 
             // MainForm

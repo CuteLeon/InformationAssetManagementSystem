@@ -29,6 +29,9 @@ namespace IAMS.Client.Controls
             this.TextAlign = ContentAlignment.MiddleCenter;
             this.Font = new Font("微软雅黑", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             this.Margin = Padding.Empty;
+            this.ImageAlign = ContentAlignment.MiddleLeft;
+            this.ForeColor = Color.DimGray;
+            this.Padding = new Padding(10, 10, 10, 10);
         }
 
         public override bool AutoSize { get => base.AutoSize; set => base.AutoSize = false; }
@@ -80,6 +83,8 @@ namespace IAMS.Client.Controls
         /// </summary>
         protected virtual void Activate()
         {
+            this.Image = AppResource.Cursor;
+            this.ForeColor = Color.Black;
             this.BackColor = Color.FromArgb(195, 196, 197);
         }
 
@@ -88,6 +93,8 @@ namespace IAMS.Client.Controls
         /// </summary>
         protected virtual void Deactivate()
         {
+            this.Image = null;
+            this.ForeColor = Color.DimGray;
             this.BackColor = Color.FromArgb(234, 232, 231);
         }
 
