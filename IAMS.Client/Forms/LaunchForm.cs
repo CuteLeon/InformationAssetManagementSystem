@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IAMS.Client.Utils;
@@ -18,14 +16,14 @@ namespace IAMS.Client.Forms
             this.Icon = AppResource.AppIcon;
         }
 
-        private void LaunchForm_Shown(object sender, EventArgs e)
+        private async void LaunchForm_Shown(object sender, EventArgs e)
         {
             Application.DoEvents();
 
             DialogResult dialogResult = DialogResult.None;
             try
             {
-                this.LaunchApplication();
+                await this.LaunchApplication();
 
                 dialogResult = DialogResult.OK;
             }
@@ -44,7 +42,7 @@ namespace IAMS.Client.Forms
         /// <summary>
         /// 启动应用程序
         /// </summary>
-        private void LaunchApplication()
+        private async Task LaunchApplication()
         {
             this.MainForm = new MainForm();
 
@@ -54,8 +52,11 @@ namespace IAMS.Client.Forms
                 throw new ArgumentNullException("Web API 地址为空！");
             }
 
-            // TODO: 使用 WebHelper 请求一个会话秘钥，顺便测试网络连通；
-            // TODO: 客户端每次请求需要附带此秘钥，WebAPI 使用中间件验证此秘钥
+            // 测试连接 并 获取会话秘钥
+            const string apiAddress = "Connect/GetSessionKey";
+            string key = await WebHelper.GetStringAsync($"{address}/{apiAddress}");
+            WebHelper.SetSessionKey(key);
+
         }
     }
 }

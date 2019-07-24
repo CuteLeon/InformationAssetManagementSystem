@@ -70,6 +70,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConfigHelper.cs" />
+    <Compile Include="Utils\WebHelper.cs" />
     <EmbeddedResource Include="AppResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
@@ -107,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AppImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Launcher.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
