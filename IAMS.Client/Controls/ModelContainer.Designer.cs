@@ -212,11 +212,12 @@ namespace IAMS.Client.Controls
             this.MainLayoutPanel.SetColumnSpan(this.MainDataGridView, 8);
             this.MainDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.MainDataGridView.Location = new System.Drawing.Point(3, 38);
+            this.MainDataGridView.Location = new System.Drawing.Point(0, 35);
+            this.MainDataGridView.Margin = new System.Windows.Forms.Padding(0);
             this.MainDataGridView.Name = "MainDataGridView";
             this.MainDataGridView.RowTemplate.Height = 23;
             this.MainDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.MainDataGridView.Size = new System.Drawing.Size(742, 461);
+            this.MainDataGridView.Size = new System.Drawing.Size(748, 467);
             this.MainDataGridView.TabIndex = 15;
             // 
             // ModelContainer
