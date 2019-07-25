@@ -115,6 +115,13 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\DataSources\IAMS.Model.AuxiliaryComputer.datasource" />
+    <None Include="Properties\DataSources\IAMS.Model.DesktopComputer.datasource" />
+    <None Include="Properties\DataSources\IAMS.Model.EquipmentBase.datasource" />
+    <None Include="Properties\DataSources\IAMS.Model.LaptopComputer.datasource" />
+    <None Include="Properties\DataSources\IAMS.Model.OtherEquipment.datasource" />
+    <None Include="Properties\DataSources\IAMS.Model.Person.datasource" />
+    <None Include="Properties\DataSources\IAMS.Model.RoomEquipment.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
