@@ -34,6 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.DoubleBuffered = true;
             this.Name = "TabContainer";
             this.Size = new System.Drawing.Size(337, 229);
             this.ResumeLayout(false);

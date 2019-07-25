@@ -56,6 +56,7 @@
             this.ClientSize = new System.Drawing.Size(884, 561);
             this.Controls.Add(this.ContainerPanel);
             this.Controls.Add(this.TabButtonPanel);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(900, 600);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

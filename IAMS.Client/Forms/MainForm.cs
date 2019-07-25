@@ -44,7 +44,7 @@ namespace IAMS.Client.Forms
                 ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainer<AuxiliaryComputer>)),
                 ("机房设备", typeof(RoomEquipment), typeof(ModelContainer<RoomEquipment>)),
                 ("其他设备", typeof(OtherEquipment), typeof(ModelContainer<OtherEquipment>)),
-                ("人员信息", typeof(Person), typeof(ModelContainer<Person>)),
+                ("人员信息", typeof(Person), typeof(PersonContainer)),
             })
             {
                 LogHelper<MainForm>.Debug($"Tab => {name} && {modelType.Name} && {containerType.Name}");
@@ -81,8 +81,10 @@ namespace IAMS.Client.Forms
         {
             LogHelper<MainForm>.Debug($"切换 Tab => {last?.Name} => {current.Name}");
 
-            (last?.Tag as TabContainer)?.Hide();
+            this.SuspendLayout();
             (current.Tag as TabContainer).Show();
+            (last?.Tag as TabContainer)?.Hide();
+            this.ResumeLayout(false);
         }
         #endregion
     }

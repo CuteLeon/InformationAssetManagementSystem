@@ -10,6 +10,10 @@ namespace IAMS.Client.Controls
         public TabContainer()
         {
             this.InitializeComponent();
+
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
         }
     }
 }

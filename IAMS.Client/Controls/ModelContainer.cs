@@ -37,31 +37,9 @@ namespace IAMS.Client.Controls
             (this.ModelBindingSource as ISupportInitialize)?.BeginInit();
             this.SuspendLayout();
 
-            foreach (var propery in this.ModelType.GetProperties()
-                .Where(prop => prop.CanRead))
-            {
-                try
-                {
-                    var column = new DataGridViewTextBoxColumn()
-                    {
-                        DataPropertyName = propery.Name,
-                        Name = $"{propery.Name}DataGridViewColumn",
-                    };
-
-                    var attrs = propery.GetCustomAttributes(typeof(DisplayNameAttribute), true);
-                    var first = attrs?.FirstOrDefault();
-                    var text = (first as DisplayNameAttribute)?.DisplayName ?? propery.Name;
-
-                    column.HeaderText = text;
-
-                    this.MainDataGridView.Columns.Add(column);
-                }
-                catch
-                {
-                }
-            }
-
             this.MainDataGridView.DataSource = this.ModelBindingSource;
+
+            this.InitGridViewColumns(this.MainDataGridView);
 
             (this.MainDataGridView as ISupportInitialize)?.EndInit();
             (this.ModelBindingSource as ISupportInitialize)?.EndInit();
