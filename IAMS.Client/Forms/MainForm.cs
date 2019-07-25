@@ -39,17 +39,17 @@ namespace IAMS.Client.Forms
 
             foreach (var (name, modelType, containerType) in new (string, Type, Type)[]
             {
-                ("台式电脑", typeof(DesktopComputer), typeof(ModelContainerBase)),
-                ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainerBase)),
-                ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainerBase)),
-                ("机房设备", typeof(RoomEquipment), typeof(ModelContainerBase)),
-                ("其他设备", typeof(OtherEquipment), typeof(ModelContainerBase)),
-                ("人员信息", typeof(Person), typeof(ModelContainerBase)),
+                ("台式电脑", typeof(DesktopComputer), typeof(ModelContainerBase<DesktopComputer>)),
+                ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainerBase<LaptopComputer>)),
+                ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainerBase<AuxiliaryComputer>)),
+                ("机房设备", typeof(RoomEquipment), typeof(ModelContainerBase<RoomEquipment>)),
+                ("其他设备", typeof(OtherEquipment), typeof(ModelContainerBase<OtherEquipment>)),
+                ("人员信息", typeof(Person), typeof(ModelContainerBase<Person>)),
             })
             {
                 LogHelper<MainForm>.Debug($"Tab => {name} && {modelType.Name} && {containerType.Name}");
 
-                var container = Activator.CreateInstance(containerType) as ModelContainerBase;
+                var container = Activator.CreateInstance(containerType) as TabContainer;
 
                 container.Dock = DockStyle.Fill;
                 container.Visible = false;
@@ -81,8 +81,8 @@ namespace IAMS.Client.Forms
         {
             LogHelper<MainForm>.Debug($"切换 Tab => {last?.Name} => {current.Name}");
 
-            (last?.Tag as ModelContainerBase)?.Hide();
-            (current.Tag as ModelContainerBase).Show();
+            (last?.Tag as TabContainer)?.Hide();
+            (current.Tag as TabContainer).Show();
         }
         #endregion
     }

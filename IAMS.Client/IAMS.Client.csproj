@@ -61,12 +61,6 @@
     <Compile Include="Controls\ModelContainerBase.Designer.cs">
       <DependentUpon>ModelContainerBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PersonContainer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\PersonContainer.Designer.cs">
-      <DependentUpon>PersonContainer.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TabButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -99,9 +93,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ModelContainerBase.resx">
       <DependentUpon>ModelContainerBase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PersonContainer.resx">
-      <DependentUpon>PersonContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabContainer.resx">
       <DependentUpon>TabContainer.cs</DependentUpon>

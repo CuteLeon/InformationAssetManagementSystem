@@ -1,6 +1,9 @@
-﻿namespace IAMS.Client.Controls
+﻿using IAMS.Model;
+
+namespace IAMS.Client.Controls
 {
-    partial class ModelContainerBase
+    partial class ModelContainerBase<TModel>
+        where TModel : ModelBase
     {
         /// <summary> 
         /// 必需的设计器变量。
