@@ -68,11 +68,10 @@ namespace IAMS.Client.Forms
                 tabButton.ActiveTabChanged += this.TabButton_ActiveTabChanged;
 
                 this.TabButtonPanel.Controls.Add(tabButton);
-
-                LogHelper<MainForm>.Debug("初始化 Tab 界面完成");
             }
 
             ((this.TabButtonPanel.Controls.Count > 0) ? (this.TabButtonPanel.Controls[0] as TabButton) : null)?.TabActive();
+            LogHelper<MainForm>.Debug("初始化 Tab 界面完成");
         }
         #endregion
 
