@@ -11,24 +11,30 @@ namespace IAMS.Client.Forms
 
         public LaunchForm()
         {
+            LogHelper<LaunchForm>.Debug("启动窗口构造函数 ...");
             this.InitializeComponent();
 
             this.Icon = AppResource.AppIcon;
+            LogHelper<LaunchForm>.Debug("启动窗口构造完成");
         }
 
         private async void LaunchForm_Shown(object sender, EventArgs e)
         {
+            LogHelper<LaunchForm>.Debug("启动窗口显示 ...");
             Application.DoEvents();
 
+            LogHelper<LaunchForm>.Debug("启动应用程序 ...");
             DialogResult dialogResult = DialogResult.None;
             try
             {
                 await this.LaunchApplication();
 
+                LogHelper<LaunchForm>.Debug("启动应用程序完成 ...");
                 dialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
+                LogHelper<LaunchForm>.ErrorException(ex, "启动应用程序失败：");
                 this.UpdateProgress($"启动程序出错：{ex.Message}");
                 MessageBox.Show(ex.Message, "启动程序出错", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -66,6 +72,9 @@ namespace IAMS.Client.Forms
         /// </summary>
         /// <param name="message"></param>
         private void UpdateProgress(string message)
-            => this.ProgressLabel.Text = message;
+        {
+            LogHelper<LaunchForm>.Debug($"更新进度 => {message}");
+            this.ProgressLabel.Text = message;
+        }
     }
 }

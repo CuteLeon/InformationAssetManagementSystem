@@ -11,22 +11,30 @@ namespace IAMS.Client.Forms
     {
         public MainForm()
         {
+            LogHelper<MainForm>.Debug("创建主窗口 ...");
+
             this.Icon = AppResource.AppIcon;
             this.Text = ConfigHelper.Title;
             this.InitializeComponent();
+
+            LogHelper<MainForm>.Debug("主窗口创建完成");
         }
 
         private void MainForm_Shown(object sender, System.EventArgs e)
         {
+            LogHelper<MainForm>.Debug("显示主窗口 ...");
             Application.DoEvents();
 
             this.IniTabs();
+
+            LogHelper<MainForm>.Debug("主窗口显示完成");
         }
 
         #region 初始化界面
 
         private void IniTabs()
         {
+            LogHelper<MainForm>.Debug("初始化 Tab 界面 ...");
             this.TabButtonPanel.BackColor = Color.FromArgb(234, 232, 231);
 
             foreach (var (name, modelType, containerType) in new (string, Type, Type)[]
@@ -39,13 +47,9 @@ namespace IAMS.Client.Forms
                 ("人员信息", typeof(Person), typeof(ModelContainerBase)),
             })
             {
-                var container = Activator.CreateInstance(containerType) as ModelContainerBase;
+                LogHelper<MainForm>.Debug($"Tab => {name} && {modelType.Name} && {containerType.Name}");
 
-                #region 初始化
-                System.Threading.Thread.Sleep(100);
-                var random = new Random();
-                container.BackColor = Color.FromArgb(random.Next(256), random.Next(256), random.Next(256));
-                #endregion
+                var container = Activator.CreateInstance(containerType) as ModelContainerBase;
 
                 container.Dock = DockStyle.Fill;
                 container.Visible = false;
@@ -64,6 +68,8 @@ namespace IAMS.Client.Forms
                 tabButton.ActiveTabChanged += this.TabButton_ActiveTabChanged;
 
                 this.TabButtonPanel.Controls.Add(tabButton);
+
+                LogHelper<MainForm>.Debug("初始化 Tab 界面完成");
             }
 
             ((this.TabButtonPanel.Controls.Count > 0) ? (this.TabButtonPanel.Controls[0] as TabButton) : null)?.TabActive();
@@ -74,6 +80,8 @@ namespace IAMS.Client.Forms
 
         private void TabButton_ActiveTabChanged(TabButton current, TabButton last)
         {
+            LogHelper<MainForm>.Debug($"切换 Tab => {last?.Name} => {current.Name}");
+
             (last?.Tag as ModelContainerBase)?.Hide();
             (current.Tag as ModelContainerBase).Show();
         }
