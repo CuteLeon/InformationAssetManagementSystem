@@ -39,12 +39,12 @@ namespace IAMS.Client.Forms
 
             foreach (var (name, modelType, containerType) in new (string, Type, Type)[]
             {
-                ("台式电脑", typeof(DesktopComputer), typeof(ModelContainerBase<DesktopComputer>)),
-                ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainerBase<LaptopComputer>)),
-                ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainerBase<AuxiliaryComputer>)),
-                ("机房设备", typeof(RoomEquipment), typeof(ModelContainerBase<RoomEquipment>)),
-                ("其他设备", typeof(OtherEquipment), typeof(ModelContainerBase<OtherEquipment>)),
-                ("人员信息", typeof(Person), typeof(ModelContainerBase<Person>)),
+                ("台式电脑", typeof(DesktopComputer), typeof(ModelContainer<DesktopComputer>)),
+                ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainer<LaptopComputer>)),
+                ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainer<AuxiliaryComputer>)),
+                ("机房设备", typeof(RoomEquipment), typeof(ModelContainer<RoomEquipment>)),
+                ("其他设备", typeof(OtherEquipment), typeof(ModelContainer<OtherEquipment>)),
+                ("人员信息", typeof(Person), typeof(ModelContainer<Person>)),
             })
             {
                 LogHelper<MainForm>.Debug($"Tab => {name} && {modelType.Name} && {containerType.Name}");

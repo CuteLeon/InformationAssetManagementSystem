@@ -55,11 +55,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ModelContainerBase.cs">
+    <Compile Include="Controls\ModelContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ModelContainerBase.Designer.cs">
-      <DependentUpon>ModelContainerBase.cs</DependentUpon>
+    <Compile Include="Controls\ModelContainer.Designer.cs">
+      <DependentUpon>ModelContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TabButton.cs">
       <SubType>Component</SubType>
@@ -91,8 +91,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ModelContainerBase.resx">
-      <DependentUpon>ModelContainerBase.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ModelContainer.resx">
+      <DependentUpon>ModelContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabContainer.resx">
       <DependentUpon>TabContainer.cs</DependentUpon>

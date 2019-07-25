@@ -2,7 +2,7 @@
 
 namespace IAMS.Client.Controls
 {
-    partial class ModelContainerBase<TModel>
+    partial class ModelContainer<TModel>
         where TModel : ModelBase
     {
         /// <summary> 

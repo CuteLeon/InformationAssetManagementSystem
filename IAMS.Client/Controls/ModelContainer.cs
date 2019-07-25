@@ -5,10 +5,10 @@ namespace IAMS.Client.Controls
     /// <summary>
     /// 模型容器基类
     /// </summary>
-    public partial class ModelContainerBase<TModel> : TabContainer
+    public partial class ModelContainer<TModel> : TabContainer
         where TModel : ModelBase
     {
-        public ModelContainerBase()
+        public ModelContainer()
         {
             this.InitializeComponent();
         }
