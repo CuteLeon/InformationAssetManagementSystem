@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IAMS.Client.Utils;
@@ -18,6 +19,12 @@ namespace IAMS.Client.Controls
         protected Type ModelType = typeof(TModel);
 
         protected BindingSource ModelBindingSource = new BindingSource() { DataSource = typeof(TModel) };
+
+        protected DataGridViewCheckBoxColumn CheckBoxColumn = new DataGridViewCheckBoxColumn()
+        {
+            Frozen = true,
+            ReadOnly = false,
+        };
 
         public ModelContainer()
         {
@@ -53,12 +60,7 @@ namespace IAMS.Client.Controls
 
         protected virtual void InitGridViewColumns(DataGridView dataGridView)
         {
-            var checkColumn = new DataGridViewCheckBoxColumn()
-            {
-                Frozen = true,
-                ReadOnly = false,
-            };
-            this.MainDataGridView.Columns.Add(checkColumn);
+            this.MainDataGridView.Columns.Add(this.CheckBoxColumn);
         }
         #endregion
 
@@ -239,23 +241,42 @@ namespace IAMS.Client.Controls
         }
         #endregion
 
+        #region 选择
+
         private void SelectAllButton_Click(object sender, EventArgs e)
         {
-
+            int checkboxColumnIndex = this.CheckBoxColumn.Index;
+            foreach (var row in this.MainDataGridView.Rows.Cast<DataGridViewRow>())
+            {
+                row.Cells[checkboxColumnIndex].Value = true;
+            }
         }
 
         private void SelectNoneButton_Click(object sender, EventArgs e)
         {
-
+            int checkboxColumnIndex = this.CheckBoxColumn.Index;
+            foreach (var row in this.MainDataGridView.Rows.Cast<DataGridViewRow>())
+            {
+                row.Cells[checkboxColumnIndex].Value = false;
+            }
         }
+        #endregion
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-
+            int checkboxColumnIndex = this.CheckBoxColumn.Index;
+            foreach (var row in this.MainDataGridView.Rows
+                .Cast<DataGridViewRow>()
+                .Where(r => r.Cells[checkboxColumnIndex].Value?.Equals(true) ?? false))
+            {
+                // TODO: 导出
+                Console.WriteLine((row.DataBoundItem as TModel).ID);
+            }
         }
 
         private void MainDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            // TDODO: 更新
         }
     }
 }
