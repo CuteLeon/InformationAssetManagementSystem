@@ -163,6 +163,10 @@
     <None Include="Resources\Launcher.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IAMS.Common\IAMS.Common.csproj">
+      <Project>{399F27D2-2FE3-45D2-B1E7-C89D85EE8DCC}</Project>
+      <Name>IAMS.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IAMS.Model\IAMS.Model.csproj">
       <Project>{5E532960-5676-41F3-B5BF-F9F6D450E9FC}</Project>
       <Name>IAMS.Model</Name>

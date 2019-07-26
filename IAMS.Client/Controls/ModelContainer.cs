@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IAMS.Client.Utils;
+using IAMS.Common;
 using IAMS.Model;
 
 namespace IAMS.Client.Controls
@@ -73,6 +74,8 @@ namespace IAMS.Client.Controls
             {
                 if (response.IsSuccessStatusCode)
                 {
+                    string content = await response.Content.ReadAsStringAsync();
+                    var models = JsonConvertHelper.DeserializeObject<TModel[]>(content);
                 }
                 else
                 {
