@@ -9,7 +9,6 @@ namespace IAMS.Client.Controls
         {
             base.InitGridViewColumns(dataGridView);
 
-            dataGridView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = nameof(DesktopComputer.ID), HeaderText = "ID", Frozen = true });
             dataGridView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = nameof(DesktopComputer.NameNumber), HeaderText = "编号", Frozen = true });
             dataGridView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = nameof(DesktopComputer.Model), HeaderText = "型号", Frozen = true });
             dataGridView.Columns.Add(new DataGridViewTextBoxColumn() { DataPropertyName = nameof(DesktopComputer.User), HeaderText = "使用人", Frozen = true });

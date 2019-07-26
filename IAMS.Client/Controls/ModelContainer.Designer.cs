@@ -207,6 +207,7 @@ namespace IAMS.Client.Controls
             // 
             // MainDataGridView
             // 
+            this.MainDataGridView.AllowUserToOrderColumns = true;
             this.MainDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.MainDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.MainDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
