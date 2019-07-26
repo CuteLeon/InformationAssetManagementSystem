@@ -112,6 +112,7 @@ namespace IAMS.WebAPI.Controllers
                 }
 
                 await this.context.Set<TModel>().AddAsync(model);
+                await this.context.SaveChangesAsync();
 
                 this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求新增 ID 为 {model.ID} 的 {typeof(TModel).Name} 对象");
                 return this.StatusCode(StatusCodes.Status201Created, model.ID);
@@ -145,6 +146,7 @@ namespace IAMS.WebAPI.Controllers
                 }
 
                 this.context.Set<TModel>().Update(model);
+                this.context.SaveChanges();
 
                 this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求更新 ID 为 {model.ID} 的 {typeof(TModel).Name} 对象");
                 return this.StatusCode(StatusCodes.Status202Accepted);
@@ -177,6 +179,7 @@ namespace IAMS.WebAPI.Controllers
                 }
 
                 _ = this.context.Set<TModel>().Remove(model);
+                this.context.SaveChanges();
 
                 this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求删除 ID 为 {id} 的 {typeof(TModel).Name} 数据");
                 return this.StatusCode(StatusCodes.Status202Accepted);
