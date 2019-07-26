@@ -42,7 +42,7 @@ namespace IAMS.WebAPI.Controllers
         }
 
         [HttpGet]
-        public string Query(string key)
+        public IActionResult Query(string key)
         {
             this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求查询所有 {typeof(TModel).Name} 数据，关键字 = {key}");
 
@@ -51,7 +51,7 @@ namespace IAMS.WebAPI.Controllers
 
             var models = enumerable.ToList();
 
-            return JsonConvertHelper.SerializeObject(models);
+            return this.Content(JsonConvertHelper.SerializeObject(models));
         }
 
         protected virtual IEnumerable<TModel> CreateQueryPerdicate(IEnumerable<TModel> enumerable, string key)

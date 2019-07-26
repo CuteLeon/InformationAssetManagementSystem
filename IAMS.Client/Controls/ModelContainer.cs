@@ -62,7 +62,17 @@ namespace IAMS.Client.Controls
         private async void SearchButton_Click(object sender, EventArgs e)
         {
             string key = this.SearchTextBox.Text.Trim();
-            this.ModelBindingSource.DataSource = await this.Query(key);
+
+            try
+            {
+                this.ModelBindingSource.DataSource = await this.Query(key);
+            }
+            catch (Exception ex)
+            {
+                LogHelper<ModelContainer<TModel>>.ErrorException(ex, "查询数据遇到异常：");
+
+                MessageBox.Show($"查询数据遇到异常：\n{ex.Message}", "查询失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         protected virtual async Task<List<TModel>> Query(string key = "")
@@ -70,19 +80,28 @@ namespace IAMS.Client.Controls
             string queryUri = $"{ConfigHelper.WebAPIAddress}/{this.ModelType.Name}/Query?key={key}";
             LogHelper<ModelContainer<TModel>>.Debug($"查询地址：{queryUri}");
 
-            using (var response = await WebHelper.GetAsync(queryUri))
+            try
             {
-                if (response.IsSuccessStatusCode)
+                using (var response = await WebHelper.GetAsync(queryUri))
                 {
-                    string content = await response.Content.ReadAsStringAsync();
-                    var models = JsonConvertHelper.DeserializeObject<TModel[]>(content);
-                }
-                else
-                {
+                    LogHelper<ModelContainer<TModel>>.Debug($"接收到响应数据，状态代码：{response.StatusCode}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        var models = JsonConvertHelper.DeserializeObject<List<TModel>>(content);
+                        return models;
+                    }
+                    else
+                    {
+                        return default;
+                    }
                 }
             }
-
-            return default;
+            catch
+            {
+                throw;
+            }
         }
 
         private void AddButton_Click(object sender, EventArgs e)
