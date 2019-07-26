@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 using IAMS.Model;
 
@@ -48,6 +47,12 @@ namespace IAMS.Client.Controls
 
         protected virtual void InitGridViewColumns(DataGridView dataGridView)
         {
+            var checkColumn = new DataGridViewCheckBoxColumn()
+            {
+                Frozen = true,
+                ReadOnly = false,
+            };
+            this.MainDataGridView.Columns.Add(checkColumn);
         }
 
         private void SearchButton_Click(object sender, System.EventArgs e)

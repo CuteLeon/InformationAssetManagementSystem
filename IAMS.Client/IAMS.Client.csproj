@@ -55,13 +55,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AuxiliaryComputerContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DesktopComputerContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LaptopComputerContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\ModelContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ModelContainer.Designer.cs">
       <DependentUpon>ModelContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OtherEquipmentContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\PersonContainer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RoomEquipmentContainer.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\TabButton.cs">

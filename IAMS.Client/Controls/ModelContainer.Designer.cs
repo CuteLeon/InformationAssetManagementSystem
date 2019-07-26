@@ -33,13 +33,13 @@ namespace IAMS.Client.Controls
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.MainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SelectAllButton = new System.Windows.Forms.Button();
+            this.SelectNoneButton = new System.Windows.Forms.Button();
+            this.ExportButton = new System.Windows.Forms.Button();
+            this.DeleteButton = new System.Windows.Forms.Button();
+            this.SearchButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.SearchTextBox = new System.Windows.Forms.TextBox();
-            this.SearchButton = new System.Windows.Forms.Button();
-            this.DeleteButton = new System.Windows.Forms.Button();
-            this.ExportButton = new System.Windows.Forms.Button();
-            this.SelectNoneButton = new System.Windows.Forms.Button();
-            this.SelectAllButton = new System.Windows.Forms.Button();
             this.MainDataGridView = new System.Windows.Forms.DataGridView();
             this.MainLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainDataGridView)).BeginInit();
@@ -74,6 +74,106 @@ namespace IAMS.Client.Controls
             this.MainLayoutPanel.Size = new System.Drawing.Size(748, 502);
             this.MainLayoutPanel.TabIndex = 0;
             // 
+            // SelectAllButton
+            // 
+            this.SelectAllButton.AutoEllipsis = true;
+            this.SelectAllButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.SelectAllButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectAllButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.SelectAllButton.FlatAppearance.BorderSize = 2;
+            this.SelectAllButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.SelectAllButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.SelectAllButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SelectAllButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SelectAllButton.Location = new System.Drawing.Point(163, 3);
+            this.SelectAllButton.Name = "SelectAllButton";
+            this.SelectAllButton.Size = new System.Drawing.Size(74, 29);
+            this.SelectAllButton.TabIndex = 14;
+            this.SelectAllButton.Text = "全选";
+            this.SelectAllButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SelectAllButton.UseVisualStyleBackColor = false;
+            this.SelectAllButton.Click += new System.EventHandler(this.SelectAllButton_Click);
+            // 
+            // SelectNoneButton
+            // 
+            this.SelectNoneButton.AutoEllipsis = true;
+            this.SelectNoneButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.SelectNoneButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectNoneButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.SelectNoneButton.FlatAppearance.BorderSize = 2;
+            this.SelectNoneButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.SelectNoneButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.SelectNoneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SelectNoneButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SelectNoneButton.Location = new System.Drawing.Point(243, 3);
+            this.SelectNoneButton.Name = "SelectNoneButton";
+            this.SelectNoneButton.Size = new System.Drawing.Size(74, 29);
+            this.SelectNoneButton.TabIndex = 13;
+            this.SelectNoneButton.Text = "取消";
+            this.SelectNoneButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SelectNoneButton.UseVisualStyleBackColor = false;
+            this.SelectNoneButton.Click += new System.EventHandler(this.SelectNoneButton_Click);
+            // 
+            // ExportButton
+            // 
+            this.ExportButton.AutoEllipsis = true;
+            this.ExportButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.ExportButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExportButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.ExportButton.FlatAppearance.BorderSize = 2;
+            this.ExportButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.ExportButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExportButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ExportButton.Location = new System.Drawing.Point(323, 3);
+            this.ExportButton.Name = "ExportButton";
+            this.ExportButton.Size = new System.Drawing.Size(74, 29);
+            this.ExportButton.TabIndex = 12;
+            this.ExportButton.Text = "导出";
+            this.ExportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ExportButton.UseVisualStyleBackColor = false;
+            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.AutoEllipsis = true;
+            this.DeleteButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.DeleteButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DeleteButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.DeleteButton.FlatAppearance.BorderSize = 2;
+            this.DeleteButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.DeleteButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.DeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DeleteButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.DeleteButton.Location = new System.Drawing.Point(83, 3);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(74, 29);
+            this.DeleteButton.TabIndex = 9;
+            this.DeleteButton.Text = "删除";
+            this.DeleteButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.DeleteButton.UseVisualStyleBackColor = false;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
+            // SearchButton
+            // 
+            this.SearchButton.AutoEllipsis = true;
+            this.SearchButton.BackColor = System.Drawing.Color.Gainsboro;
+            this.SearchButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SearchButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
+            this.SearchButton.FlatAppearance.BorderSize = 2;
+            this.SearchButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
+            this.SearchButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
+            this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SearchButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SearchButton.Location = new System.Drawing.Point(671, 3);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(74, 29);
+            this.SearchButton.TabIndex = 7;
+            this.SearchButton.Text = "搜索";
+            this.SearchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.SearchButton.UseVisualStyleBackColor = false;
+            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
+            // 
             // AddButton
             // 
             this.AddButton.AutoEllipsis = true;
@@ -105,109 +205,9 @@ namespace IAMS.Client.Controls
             this.SearchTextBox.TabIndex = 6;
             this.SearchTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // SearchButton
-            // 
-            this.SearchButton.AutoEllipsis = true;
-            this.SearchButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.SearchButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SearchButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.SearchButton.FlatAppearance.BorderSize = 2;
-            this.SearchButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.SearchButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.SearchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SearchButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SearchButton.Location = new System.Drawing.Point(671, 3);
-            this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(74, 29);
-            this.SearchButton.TabIndex = 7;
-            this.SearchButton.Text = "搜索";
-            this.SearchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SearchButton.UseVisualStyleBackColor = false;
-            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
-            // 
-            // DeleteButton
-            // 
-            this.DeleteButton.AutoEllipsis = true;
-            this.DeleteButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.DeleteButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DeleteButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.DeleteButton.FlatAppearance.BorderSize = 2;
-            this.DeleteButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.DeleteButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.DeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DeleteButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.DeleteButton.Location = new System.Drawing.Point(83, 3);
-            this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(74, 29);
-            this.DeleteButton.TabIndex = 9;
-            this.DeleteButton.Text = "删除";
-            this.DeleteButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.DeleteButton.UseVisualStyleBackColor = false;
-            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
-            // 
-            // ExportButton
-            // 
-            this.ExportButton.AutoEllipsis = true;
-            this.ExportButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.ExportButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ExportButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.ExportButton.FlatAppearance.BorderSize = 2;
-            this.ExportButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.ExportButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.ExportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ExportButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ExportButton.Location = new System.Drawing.Point(323, 3);
-            this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(74, 29);
-            this.ExportButton.TabIndex = 12;
-            this.ExportButton.Text = "导出";
-            this.ExportButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.ExportButton.UseVisualStyleBackColor = false;
-            this.ExportButton.Click += new System.EventHandler(this.ExportButton_Click);
-            // 
-            // SelectNoneButton
-            // 
-            this.SelectNoneButton.AutoEllipsis = true;
-            this.SelectNoneButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.SelectNoneButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SelectNoneButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.SelectNoneButton.FlatAppearance.BorderSize = 2;
-            this.SelectNoneButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.SelectNoneButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.SelectNoneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SelectNoneButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SelectNoneButton.Location = new System.Drawing.Point(243, 3);
-            this.SelectNoneButton.Name = "SelectNoneButton";
-            this.SelectNoneButton.Size = new System.Drawing.Size(74, 29);
-            this.SelectNoneButton.TabIndex = 13;
-            this.SelectNoneButton.Text = "取消";
-            this.SelectNoneButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SelectNoneButton.UseVisualStyleBackColor = false;
-            this.SelectNoneButton.Click += new System.EventHandler(this.SelectNoneButton_Click);
-            // 
-            // SelectAllButton
-            // 
-            this.SelectAllButton.AutoEllipsis = true;
-            this.SelectAllButton.BackColor = System.Drawing.Color.Gainsboro;
-            this.SelectAllButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SelectAllButton.FlatAppearance.BorderColor = System.Drawing.Color.Silver;
-            this.SelectAllButton.FlatAppearance.BorderSize = 2;
-            this.SelectAllButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DarkGray;
-            this.SelectAllButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
-            this.SelectAllButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SelectAllButton.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SelectAllButton.Location = new System.Drawing.Point(163, 3);
-            this.SelectAllButton.Name = "SelectAllButton";
-            this.SelectAllButton.Size = new System.Drawing.Size(74, 29);
-            this.SelectAllButton.TabIndex = 14;
-            this.SelectAllButton.Text = "全选";
-            this.SelectAllButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.SelectAllButton.UseVisualStyleBackColor = false;
-            this.SelectAllButton.Click += new System.EventHandler(this.SelectAllButton_Click);
-            // 
             // MainDataGridView
             // 
-            this.MainDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.MainDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.MainDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.MainDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.MainDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;

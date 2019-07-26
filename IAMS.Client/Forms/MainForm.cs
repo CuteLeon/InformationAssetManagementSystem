@@ -42,11 +42,11 @@ namespace IAMS.Client.Forms
 
             foreach (var (name, modelType, containerType) in new (string, Type, Type)[]
             {
-                ("台式电脑", typeof(DesktopComputer), typeof(ModelContainer<DesktopComputer>)),
-                ("笔记本电脑", typeof(LaptopComputer), typeof(ModelContainer<LaptopComputer>)),
-                ("备用电脑", typeof(AuxiliaryComputer), typeof(ModelContainer<AuxiliaryComputer>)),
-                ("机房设备", typeof(RoomEquipment), typeof(ModelContainer<RoomEquipment>)),
-                ("其他设备", typeof(OtherEquipment), typeof(ModelContainer<OtherEquipment>)),
+                ("台式电脑", typeof(DesktopComputer), typeof(DesktopComputerContainer)),
+                ("笔记本电脑", typeof(LaptopComputer), typeof(LaptopComputerContainer)),
+                ("备用电脑", typeof(AuxiliaryComputer), typeof(AuxiliaryComputerContainer)),
+                ("机房设备", typeof(RoomEquipment), typeof(RoomEquipmentContainer)),
+                ("其他设备", typeof(OtherEquipment), typeof(OtherEquipmentContainer)),
                 ("人员信息", typeof(Person), typeof(PersonContainer)),
             })
             {
