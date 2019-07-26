@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using IAMS.Client.Utils;
 using IAMS.Model;
 
 namespace IAMS.Client.Controls
@@ -55,32 +58,51 @@ namespace IAMS.Client.Controls
             this.MainDataGridView.Columns.Add(checkColumn);
         }
 
-        private void SearchButton_Click(object sender, System.EventArgs e)
+        private async void SearchButton_Click(object sender, EventArgs e)
+        {
+            string key = this.SearchTextBox.Text.Trim();
+            this.ModelBindingSource.DataSource = await this.Query(key);
+        }
+
+        protected virtual async Task<List<TModel>> Query(string key = "")
+        {
+            string queryUri = $"{ConfigHelper.WebAPIAddress}/{this.ModelType.Name}/Query?key={key}";
+            LogHelper<ModelContainer<TModel>>.Debug($"查询地址：{queryUri}");
+
+            using (var response = await WebHelper.GetAsync(queryUri))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                }
+                else
+                {
+                }
+            }
+
+            return default;
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void AddButton_Click(object sender, System.EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void DeleteButton_Click(object sender, System.EventArgs e)
+        private void SelectAllButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void SelectAllButton_Click(object sender, System.EventArgs e)
+        private void SelectNoneButton_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void SelectNoneButton_Click(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void ExportButton_Click(object sender, System.EventArgs e)
+        private void ExportButton_Click(object sender, EventArgs e)
         {
 
         }
