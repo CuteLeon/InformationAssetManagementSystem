@@ -92,7 +92,7 @@ namespace IAMS.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(string value)
+        public async Task<IActionResult> Add([FromForm]string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -114,7 +114,7 @@ namespace IAMS.WebAPI.Controllers
                 await this.context.Set<TModel>().AddAsync(model);
 
                 this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求新增 ID 为 {model.ID} 的 {typeof(TModel).Name} 对象");
-                return this.StatusCode(StatusCodes.Status201Created);
+                return this.StatusCode(StatusCodes.Status201Created, model.ID);
             }
             catch (Exception ex)
             {

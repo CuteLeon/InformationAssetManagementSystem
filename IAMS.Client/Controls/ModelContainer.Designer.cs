@@ -209,6 +209,8 @@ namespace IAMS.Client.Controls
             // 
             // MainDataGridView
             // 
+            this.MainDataGridView.AllowUserToAddRows = false;
+            this.MainDataGridView.AllowUserToDeleteRows = false;
             this.MainDataGridView.AllowUserToOrderColumns = true;
             this.MainDataGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -236,7 +238,6 @@ namespace IAMS.Client.Controls
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.MainDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.MainDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.MainDataGridView.GridColor = System.Drawing.Color.LightGray;
             this.MainDataGridView.Location = new System.Drawing.Point(0, 35);
             this.MainDataGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -246,6 +247,7 @@ namespace IAMS.Client.Controls
             this.MainDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.MainDataGridView.Size = new System.Drawing.Size(748, 467);
             this.MainDataGridView.TabIndex = 15;
+            this.MainDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.MainDataGridView_CellEndEdit);
             // 
             // ModelContainer
             // 

@@ -31,6 +31,8 @@ namespace IAMS.Client.Controls
             this.InitGridView();
         }
 
+        #region 初始化表格
+
         private void InitGridView()
         {
             this.MainDataGridView.AutoGenerateColumns = false;
@@ -58,6 +60,9 @@ namespace IAMS.Client.Controls
             };
             this.MainDataGridView.Columns.Add(checkColumn);
         }
+        #endregion
+
+        #region 搜索按钮
 
         private async void SearchButton_Click(object sender, EventArgs e)
         {
@@ -103,11 +108,64 @@ namespace IAMS.Client.Controls
                 throw;
             }
         }
+        #endregion
 
-        private void AddButton_Click(object sender, EventArgs e)
+        #region 新增
+
+        private async void AddButton_Click(object sender, EventArgs e)
         {
+            var newModel = this.ModelBindingSource.AddNew() as TModel;
 
+            try
+            {
+                var id = await this.Add(newModel);
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    this.ModelBindingSource.Remove(newModel);
+
+                    MessageBox.Show($"新增数据遇到异常：\n服务端返回模型 ID 为空！", "新增失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                newModel.ID = id;
+            }
+            catch (Exception ex)
+            {
+                LogHelper<ModelContainer<TModel>>.ErrorException(ex, "新增数据遇到异常：");
+
+                MessageBox.Show($"新增数据遇到异常：\n{ex.Message}", "新增失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
+        protected virtual async Task<string> Add(TModel newModel)
+        {
+            string queryUri = $"{ConfigHelper.WebAPIAddress}/{this.ModelType.Name}/Add";
+            LogHelper<ModelContainer<TModel>>.Debug($"查询地址：{queryUri}");
+
+            try
+            {
+                var json = JsonConvertHelper.SerializeObject(newModel);
+                using (var response = await WebHelper.PostAsync(queryUri, json))
+                {
+                    LogHelper<ModelContainer<TModel>>.Debug($"接收到响应数据，状态代码：{response.StatusCode}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        return content;
+                    }
+                    else
+                    {
+                        return default;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
@@ -127,6 +185,10 @@ namespace IAMS.Client.Controls
         private void ExportButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }

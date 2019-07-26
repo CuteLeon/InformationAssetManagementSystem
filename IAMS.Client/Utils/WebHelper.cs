@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -37,11 +38,12 @@ namespace IAMS.Client.Utils
             }
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(string requestUri, string formValue)
+        public static async Task<HttpResponseMessage> PostAsync(string requestUri, string formValue, string formKey = "value")
         {
             try
             {
-                return await httpClient.PostAsync(requestUri, new StringContent(formValue));
+                var form = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>(formKey, formValue) });
+                return await httpClient.PostAsync(requestUri, form);
             }
             catch
             {
