@@ -42,14 +42,16 @@ namespace IAMS.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Query(string key)
+        public string Query(string key)
         {
             this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求查询所有 {typeof(TModel).Name} 数据，关键字 = {key}");
 
-            var models = this.context.Set<TModel>().AsEnumerable();
-            models = this.CreateQueryPerdicate(models, key);
+            var enumerable = this.context.Set<TModel>().AsEnumerable();
+            enumerable = this.CreateQueryPerdicate(enumerable, key);
 
-            return models.Select(model => JsonConvertHelper.SerializeObject(model));
+            var models = enumerable.ToList();
+
+            return JsonConvertHelper.SerializeObject(models);
         }
 
         protected virtual IEnumerable<TModel> CreateQueryPerdicate(IEnumerable<TModel> enumerable, string key)
