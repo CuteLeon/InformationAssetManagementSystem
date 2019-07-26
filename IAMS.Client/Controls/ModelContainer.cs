@@ -167,10 +167,69 @@ namespace IAMS.Client.Controls
         }
         #endregion
 
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
+        #region 删除
 
+        private async void DeleteButton_Click(object sender, EventArgs e)
+        {
+            this.DeleteButton.Enabled = false;
+
+            try
+            {
+                if (!(this.ModelBindingSource.Current is TModel current))
+                {
+                    return;
+                }
+
+                var result = await this.Delete(current.ID);
+                if (result)
+                {
+                    this.ModelBindingSource.Remove(current);
+                }
+                else
+                {
+                    MessageBox.Show($"删除数据遇到异常。", "删除失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper<ModelContainer<TModel>>.ErrorException(ex, "删除数据遇到异常：");
+
+                MessageBox.Show($"删除数据遇到异常：\n{ex.Message}", "删除失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                this.DeleteButton.Enabled = true;
+            }
         }
+
+        protected virtual async Task<bool> Delete(string id)
+        {
+            string queryUri = $"{ConfigHelper.WebAPIAddress}/{this.ModelType.Name}/Delete?id={id}";
+            LogHelper<ModelContainer<TModel>>.Debug($"删除地址：{queryUri}");
+
+            try
+            {
+                using (var response = await WebHelper.GetAsync(queryUri))
+                {
+                    LogHelper<ModelContainer<TModel>>.Debug($"接收到响应数据，状态代码：{response.StatusCode}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
 
         private void SelectAllButton_Click(object sender, EventArgs e)
         {

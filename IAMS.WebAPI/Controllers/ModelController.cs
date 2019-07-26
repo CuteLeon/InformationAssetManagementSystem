@@ -47,7 +47,10 @@ namespace IAMS.WebAPI.Controllers
             this.logger.LogDebug($"{this.HttpContext.Connection.RemoteIpAddress} 请求查询所有 {typeof(TModel).Name} 数据，关键字 = {key}");
 
             var enumerable = this.context.Set<TModel>().AsEnumerable();
-            enumerable = this.CreateQueryPerdicate(enumerable, key);
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                enumerable = this.CreateQueryPerdicate(enumerable, key);
+            }
 
             var models = enumerable.ToList();
 
