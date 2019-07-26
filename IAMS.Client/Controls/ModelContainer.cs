@@ -67,6 +67,7 @@ namespace IAMS.Client.Controls
         private async void SearchButton_Click(object sender, EventArgs e)
         {
             string key = this.SearchTextBox.Text.Trim();
+            LogHelper<ModelContainer<TModel>>.Debug($"搜索数据：关键字 = {key}");
 
             try
             {
@@ -95,6 +96,8 @@ namespace IAMS.Client.Controls
                     {
                         string content = await response.Content.ReadAsStringAsync();
                         var models = JsonConvertHelper.DeserializeObject<List<TModel>>(content);
+
+                        LogHelper<ModelContainer<TModel>>.Debug($"接收到 {models.Count} 条数据。");
                         return models;
                     }
                     else
@@ -115,12 +118,14 @@ namespace IAMS.Client.Controls
         private async void AddButton_Click(object sender, EventArgs e)
         {
             var newModel = this.ModelBindingSource.AddNew() as TModel;
+            LogHelper<ModelContainer<TModel>>.Debug($"新增数据");
 
             try
             {
                 var id = await this.Add(newModel);
                 if (string.IsNullOrWhiteSpace(id))
                 {
+                    LogHelper<ModelContainer<TModel>>.Error($"新增数据遇到异常：服务端返回模型 ID 为空！");
                     this.ModelBindingSource.Remove(newModel);
 
                     MessageBox.Show($"新增数据遇到异常：\n服务端返回模型 ID 为空！", "新增失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -151,8 +156,10 @@ namespace IAMS.Client.Controls
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string content = await response.Content.ReadAsStringAsync();
-                        return content;
+                        string id = await response.Content.ReadAsStringAsync();
+
+                        LogHelper<ModelContainer<TModel>>.Debug($"新增数据，返回 ID = {id}");
+                        return id;
                     }
                     else
                     {
@@ -180,6 +187,7 @@ namespace IAMS.Client.Controls
                     return;
                 }
 
+                LogHelper<ModelContainer<TModel>>.Debug($"删除数据：ID = {current.ID}");
                 var result = await this.Delete(current.ID);
                 if (result)
                 {
@@ -187,8 +195,8 @@ namespace IAMS.Client.Controls
                 }
                 else
                 {
+                    LogHelper<ModelContainer<TModel>>.Error($"删除数据遇到异常：ID = {current.ID}");
                     MessageBox.Show($"删除数据遇到异常。", "删除失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
                 }
             }
             catch (Exception ex)
