@@ -65,6 +65,8 @@ namespace IAMS.Client.Forms
 
             this.UpdateProgress($"创建主窗口 ...");
             this.MainForm = new MainForm();
+            this.UpdateProgress($"初始化界面 ...");
+            this.MainForm.InitUI();
         }
 
         /// <summary>

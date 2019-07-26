@@ -25,16 +25,19 @@ namespace IAMS.Client.Forms
             LogHelper<MainForm>.Debug("显示主窗口 ...");
             Application.DoEvents();
 
-            this.IniTabs();
-
             LogHelper<MainForm>.Debug("主窗口显示完成");
         }
 
         #region 初始化界面
 
-        private void IniTabs()
+        public void InitUI()
         {
-            LogHelper<MainForm>.Debug("初始化 Tab 界面 ...");
+            this.InitTabs();
+        }
+
+        private void InitTabs()
+        {
+            LogHelper<MainForm>.Debug("初始化 Tab ...");
             this.TabButtonPanel.BackColor = Color.FromArgb(234, 232, 231);
 
             foreach (var (name, modelType, containerType) in new (string, Type, Type)[]
