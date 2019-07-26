@@ -7,21 +7,21 @@ using Microsoft.Extensions.Logging;
 
 namespace IAMS.WebAPI.Controllers
 {
-    public class DesktopComputerController : ModelController<DesktopComputer>
+    public class AuxiliaryComputerController : ModelController<AuxiliaryComputer>
     {
-        public DesktopComputerController(
+        public AuxiliaryComputerController(
             DBContext context,
-            ILogger<DesktopComputerController> logger)
+            ILogger<AuxiliaryComputerController> logger)
             : base(context, logger)
         {
         }
 
-        protected override IEnumerable<DesktopComputer> CreateQueryPerdicate(IEnumerable<DesktopComputer> enumerable, string key)
+        protected override IEnumerable<AuxiliaryComputer> CreateQueryPerdicate(IEnumerable<AuxiliaryComputer> enumerable, string key)
         {
             var pattern = $"%{key}%";
             return base.CreateQueryPerdicate(enumerable, key)
                 .Where(model =>
-                    EF.Functions.Like(model.User, pattern) ||
+                    EF.Functions.Like(model.Borrower, pattern) ||
                     EF.Functions.Like(model.Model, pattern) ||
                     EF.Functions.Like(model.NameNumber, pattern));
         }

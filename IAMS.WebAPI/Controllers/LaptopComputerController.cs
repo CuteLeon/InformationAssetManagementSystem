@@ -7,16 +7,16 @@ using Microsoft.Extensions.Logging;
 
 namespace IAMS.WebAPI.Controllers
 {
-    public class DesktopComputerController : ModelController<DesktopComputer>
+    public class LaptopComputerController : ModelController<LaptopComputer>
     {
-        public DesktopComputerController(
+        public LaptopComputerController(
             DBContext context,
-            ILogger<DesktopComputerController> logger)
+            ILogger<LaptopComputerController> logger)
             : base(context, logger)
         {
         }
 
-        protected override IEnumerable<DesktopComputer> CreateQueryPerdicate(IEnumerable<DesktopComputer> enumerable, string key)
+        protected override IEnumerable<LaptopComputer> CreateQueryPerdicate(IEnumerable<LaptopComputer> enumerable, string key)
         {
             var pattern = $"%{key}%";
             return base.CreateQueryPerdicate(enumerable, key)
