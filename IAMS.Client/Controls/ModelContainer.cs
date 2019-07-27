@@ -20,6 +20,8 @@ namespace IAMS.Client.Controls
 
         protected BindingSource ModelBindingSource = new BindingSource() { DataSource = typeof(TModel) };
 
+        private readonly int CheckBoxColumnIndex = 0;
+
         protected DataGridViewCheckBoxColumn CheckBoxColumn = new DataGridViewCheckBoxColumn()
         {
             Frozen = true,
@@ -36,6 +38,9 @@ namespace IAMS.Client.Controls
             }
 
             this.InitGridView();
+
+            // 插入了列：0~N，未插入列：-1
+            this.CheckBoxColumnIndex = this.CheckBoxColumn.Index;
         }
 
         #region 初始化表格
@@ -52,6 +57,7 @@ namespace IAMS.Client.Controls
             this.MainDataGridView.DataSource = this.ModelBindingSource;
 
             this.InitGridViewColumns(this.MainDataGridView);
+            this.MainDataGridView.Columns.Insert(this.CheckBoxColumnIndex, this.CheckBoxColumn);
 
             (this.MainDataGridView as ISupportInitialize)?.EndInit();
             (this.ModelBindingSource as ISupportInitialize)?.EndInit();
@@ -60,7 +66,6 @@ namespace IAMS.Client.Controls
 
         protected virtual void InitGridViewColumns(DataGridView dataGridView)
         {
-            this.MainDataGridView.Columns.Add(this.CheckBoxColumn);
         }
         #endregion
 
@@ -139,6 +144,7 @@ namespace IAMS.Client.Controls
             catch (Exception ex)
             {
                 LogHelper<TModel>.ErrorException(ex, "新增数据遇到异常：");
+                this.ModelBindingSource.Remove(newModel);
 
                 MessageBox.Show($"新增数据遇到异常：\n{ex.Message}", "新增失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -147,7 +153,7 @@ namespace IAMS.Client.Controls
         protected virtual async Task<string> Add(TModel newModel)
         {
             string queryUri = $"{ConfigHelper.WebAPIAddress}/{this.ModelType.Name}/Add";
-            LogHelper<TModel>.Debug($"查询地址：{queryUri}");
+            LogHelper<TModel>.Debug($"新增地址：{queryUri}");
 
             try
             {
@@ -245,22 +251,26 @@ namespace IAMS.Client.Controls
 
         private void SelectAllButton_Click(object sender, EventArgs e)
         {
-            int checkboxColumnIndex = this.CheckBoxColumn.Index;
+            if (this.CheckBoxColumnIndex == -1) return;
+
             foreach (var row in this.MainDataGridView.Rows.Cast<DataGridViewRow>())
             {
-                row.Cells[checkboxColumnIndex].Value = true;
+                row.Cells[this.CheckBoxColumnIndex].Value = true;
             }
         }
 
         private void SelectNoneButton_Click(object sender, EventArgs e)
         {
-            int checkboxColumnIndex = this.CheckBoxColumn.Index;
+            if (this.CheckBoxColumnIndex == -1) return;
+
             foreach (var row in this.MainDataGridView.Rows.Cast<DataGridViewRow>())
             {
-                row.Cells[checkboxColumnIndex].Value = false;
+                row.Cells[this.CheckBoxColumnIndex].Value = false;
             }
         }
         #endregion
+
+        #region 导出
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
@@ -273,10 +283,80 @@ namespace IAMS.Client.Controls
                 Console.WriteLine((row.DataBoundItem as TModel).ID);
             }
         }
+        #endregion
 
-        private void MainDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        #region 编辑
+
+        private object originalValue = null;
+
+        private void MainDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            // TDODO: 更新
+            if (e.ColumnIndex == this.CheckBoxColumnIndex) return;
+
+            LogHelper<TModel>.Debug($"开始编辑：{e.RowIndex} - {e.ColumnIndex}");
+            this.originalValue = this.MainDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         }
+
+        private async void MainDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == this.CheckBoxColumnIndex) return;
+
+            LogHelper<TModel>.Debug($"编辑完成：{e.RowIndex} - {e.ColumnIndex}");
+            var currentValue = this.MainDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            if (currentValue == this.originalValue) return;
+
+            if (!(this.ModelBindingSource.Current is TModel model)) return;
+
+            LogHelper<TModel>.Debug($"更新数据：ID = {model.ID}");
+            try
+            {
+                var result = await this.Update(model);
+                if (!result)
+                {
+                    LogHelper<TModel>.Error($"更新数据遇到异常：ID = {model.ID}");
+                    this.MainDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = this.originalValue;
+
+                    MessageBox.Show($"更新数据遇到异常。", "更新失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper<TModel>.ErrorException(ex, "更新数据遇到异常：");
+                this.MainDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = this.originalValue;
+
+                MessageBox.Show($"更新数据遇到异常：\n{ex.Message}", "更新失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            this.originalValue = null;
+        }
+
+        protected virtual async Task<bool> Update(TModel model)
+        {
+            string queryUri = $"{ConfigHelper.WebAPIAddress}/{this.ModelType.Name}/Update";
+            LogHelper<TModel>.Debug($"查询地址：{queryUri}");
+
+            try
+            {
+                var json = JsonConvertHelper.SerializeObject(model);
+                using (var response = await WebHelper.PostAsync(queryUri, json))
+                {
+                    LogHelper<TModel>.Debug($"接收到响应数据，状态代码：{response.StatusCode}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
     }
 }

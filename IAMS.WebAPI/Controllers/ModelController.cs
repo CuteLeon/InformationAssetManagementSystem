@@ -129,7 +129,7 @@ namespace IAMS.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(string value)
+        public IActionResult Update([FromForm]string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
