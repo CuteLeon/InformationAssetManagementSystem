@@ -19,6 +19,9 @@ namespace IAMS.Client.Controls
             if (disposing && (components != null))
             {
                 components.Dispose();
+
+                this.ModelBindingSource.Dispose();
+                this.CheckBoxColumn.Dispose();
             }
             base.Dispose(disposing);
         }
