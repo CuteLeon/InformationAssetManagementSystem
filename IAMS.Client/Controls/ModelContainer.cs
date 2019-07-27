@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IAMS.Client.Utils;
 using IAMS.Common;
 using IAMS.Model;
+using OfficeOpenXml;
 
 namespace IAMS.Client.Controls
 {
@@ -195,6 +197,11 @@ namespace IAMS.Client.Controls
                     return;
                 }
 
+                if (MessageBox.Show("确认要删除此条记录吗？", "确认删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                {
+                    return;
+                }
+
                 LogHelper<TModel>.Debug($"删除数据：ID = {current.ID}");
                 var result = await this.Delete(current.ID);
                 if (result)
@@ -274,13 +281,90 @@ namespace IAMS.Client.Controls
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            int checkboxColumnIndex = this.CheckBoxColumn.Index;
-            foreach (var row in this.MainDataGridView.Rows
-                .Cast<DataGridViewRow>()
-                .Where(r => r.Cells[checkboxColumnIndex].Value?.Equals(true) ?? false))
+            var enumerable = this.MainDataGridView.Rows.Cast<DataGridViewRow>();
+            if (this.CheckBoxColumnIndex != -1)
             {
-                // TODO: 导出
-                Console.WriteLine((row.DataBoundItem as TModel).ID);
+                enumerable = enumerable.Where(r => r.Cells[this.CheckBoxColumnIndex].Value?.Equals(true) ?? false);
+            }
+            var rows = enumerable.ToList();
+            if (rows.Count == 0)
+            {
+                MessageBox.Show("未选择任何需要导出的行。", "无法导出", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string fileName = string.Empty;
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                AddExtension = true,
+                CheckPathExists = true,
+                DefaultExt = ".xlsx",
+                FileName = $"信息化资产导出报表-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}",
+                Filter = "Excel 文件|*.xlsx|所有文件|*",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Title = "请选择 Excel 存储目录：",
+            })
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = saveFileDialog.FileName;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            LogHelper<TModel>.Debug($"导出 {rows.Count} 行数据到 {fileName}");
+            try
+            {
+                this.CreateExcelPackage(fileName, rows);
+
+                MessageBox.Show($"导出数据成功！\n{fileName}", "导出成功");
+            }
+            catch (Exception ex)
+            {
+                LogHelper<TModel>.ErrorException(ex, $"导出数据遇到异常：");
+
+                MessageBox.Show($"导出数据遇到异常：\n{ex.Message}", "导出失败，请重试", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        protected virtual void CreateExcelPackage(string fileName, List<DataGridViewRow> rows)
+        {
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            {
+                var properties = excel.Workbook.Properties;
+                properties.Author = $"信息化资产管理系统 - {Application.ProductVersion}";
+                properties.Category = "信息化资产导出报表";
+                properties.Title = $"信息化资产导出报表";
+                properties.Comments = $"信息化资产导出报表";
+                properties.Company = "信息化资产管理系统";
+                properties.Created = DateTime.Now;
+                properties.Manager = properties.Author;
+                properties.Subject = properties.Title;
+
+                var sheet = excel.Workbook.Worksheets.Add(this.ModelType.Name);
+                using (ExcelRange range = sheet.Cells[1, 1, rows.Count + 1, this.MainDataGridView.Columns.Count])
+                {
+                    var headers = this.MainDataGridView.Columns
+                    .Cast<DataGridViewColumn>()
+                    .Select((column, index) =>
+                    {
+                        range[1, 1 + index].Value = column.HeaderText;
+                        return column.HeaderText;
+                    }).ToArray();
+
+                    for (int rowIndex = 0; rowIndex < rows.Count; rowIndex++)
+                    {
+                        for (int columnIndex = 0; columnIndex < headers.Length; columnIndex++)
+                        {
+                            range[2 + rowIndex, 1 + columnIndex].Value = rows[rowIndex].Cells[columnIndex].Value;
+                        }
+                    }
+                }
+
+                excel.Save();
             }
         }
         #endregion

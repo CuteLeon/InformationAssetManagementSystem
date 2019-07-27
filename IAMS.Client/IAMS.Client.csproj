@@ -176,6 +176,9 @@
     <None Include="Resources\Cursor.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="EPPlus">
+      <Version>4.5.3.2</Version>
+    </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.6.6</Version>
     </PackageReference>
