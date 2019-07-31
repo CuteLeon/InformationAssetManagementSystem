@@ -43,6 +43,47 @@ namespace IAMS.Client.Controls
 
             // 插入了列：0~N，未插入列：-1
             this.CheckBoxColumnIndex = this.CheckBoxColumn.Index;
+
+            // Tab 切换下一个单元格
+            this.MainDataGridView.StandardTab = false;
+            // 绑定编辑控件显示事件
+            this.MainDataGridView.EditingControlShowing += this.BindEditingControl;
+        }
+
+        private void BindEditingControl(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            // 注册一次即可
+            this.MainDataGridView.EditingControlShowing -= this.BindEditingControl;
+
+            // PreviewKeyDown 可捕捉命令按键
+            e.Control.PreviewKeyDown += this.EditingControl_PreviewKeyDown;
+        }
+
+        private void EditingControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            var currentCell = this.MainDataGridView.CurrentCell;
+            if (currentCell == null || !currentCell.IsInEditMode)
+            {
+                return;
+            }
+
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    {
+                        // 编辑状态按 Enter 键新建行
+                        this.AddButton.PerformClick();
+
+                        var nextRowIndex = currentCell.RowIndex + 1;
+                        this.MainDataGridView.CurrentCell = this.MainDataGridView.Rows[nextRowIndex].Cells[1];
+                        this.MainDataGridView.BeginEdit(true);
+
+                        break;
+                    }
+
+                default:
+                    break;
+            }
         }
 
         #region 初始化表格
@@ -377,7 +418,6 @@ namespace IAMS.Client.Controls
         {
             if (e.ColumnIndex == this.CheckBoxColumnIndex) return;
 
-            LogHelper<TModel>.Debug($"开始编辑：{e.RowIndex} - {e.ColumnIndex}");
             this.originalValue = this.MainDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         }
 
@@ -385,7 +425,6 @@ namespace IAMS.Client.Controls
         {
             if (e.ColumnIndex == this.CheckBoxColumnIndex) return;
 
-            LogHelper<TModel>.Debug($"编辑完成：{e.RowIndex} - {e.ColumnIndex}");
             var currentValue = this.MainDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
             if (currentValue == this.originalValue) return;
 
