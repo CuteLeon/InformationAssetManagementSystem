@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IAMS.Client.Forms;
 using IAMS.Client.Utils;
 using IAMS.Common;
 using IAMS.Model;
@@ -334,6 +335,11 @@ namespace IAMS.Client.Controls
                 return;
             }
 
+            var columns = ColumnCheckDialog.ShowColumnCheckDialog(
+                this.MainDataGridView.Columns
+                .Cast<DataGridViewColumn>()
+                .Select(column => column.HeaderText));
+
             string fileName = string.Empty;
             using (SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
@@ -359,7 +365,7 @@ namespace IAMS.Client.Controls
             LogHelper<TModel>.Debug($"导出 {rows.Count} 行数据到 {fileName}");
             try
             {
-                this.CreateExcelPackage(fileName, rows);
+                this.ExportToExcel(fileName, rows, columns);
 
                 MessageBox.Show($"导出数据成功！\n{fileName}", "导出成功");
             }
@@ -371,7 +377,7 @@ namespace IAMS.Client.Controls
             }
         }
 
-        protected virtual void CreateExcelPackage(string fileName, List<DataGridViewRow> rows)
+        protected virtual void ExportToExcel(string fileName, List<DataGridViewRow> rows, int[] columns)
         {
             using (var excel = new ExcelPackage(new FileInfo(fileName)))
             {
@@ -386,21 +392,20 @@ namespace IAMS.Client.Controls
                 properties.Subject = properties.Title;
 
                 var sheet = excel.Workbook.Worksheets.Add(this.ModelType.Name);
-                using (ExcelRange range = sheet.Cells[1, 1, rows.Count + 1, this.MainDataGridView.Columns.Count])
+                using (ExcelRange range = sheet.Cells[1, 1, rows.Count + 1, columns.Length])
                 {
-                    var headers = this.MainDataGridView.Columns
-                    .Cast<DataGridViewColumn>()
-                    .Select((column, index) =>
+                    var headers = columns.Select((column, index) =>
                     {
-                        range[1, 1 + index].Value = column.HeaderText;
-                        return column.HeaderText;
+                        var text = this.MainDataGridView.Columns[column].HeaderText;
+                        range[1, 1 + index].Value = text;
+                        return text;
                     }).ToArray();
 
                     for (int rowIndex = 0; rowIndex < rows.Count; rowIndex++)
                     {
-                        for (int columnIndex = 0; columnIndex < headers.Length; columnIndex++)
+                        for (int columnIndex = 0; columnIndex < columns.Length; columnIndex++)
                         {
-                            range[2 + rowIndex, 1 + columnIndex].Value = rows[rowIndex].Cells[columnIndex].Value;
+                            range[2 + rowIndex, 1 + columnIndex].Value = rows[rowIndex].Cells[columns[columnIndex]].Value;
                         }
                     }
                 }

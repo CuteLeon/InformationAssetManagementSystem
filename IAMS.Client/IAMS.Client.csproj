@@ -88,6 +88,12 @@
     <Compile Include="Controls\TabContainer.Designer.cs">
       <DependentUpon>TabContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ColumnCheckDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ColumnCheckDialog.Designer.cs">
+      <DependentUpon>ColumnCheckDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabContainer.resx">
       <DependentUpon>TabContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ColumnCheckDialog.resx">
+      <DependentUpon>ColumnCheckDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
